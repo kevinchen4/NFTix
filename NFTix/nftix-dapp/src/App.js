@@ -7,6 +7,7 @@ import {getMyNFT} from "./cadence/scripts/getNFTs.js";
 import {mint} from "./cadence/transactions/mint.js";
 import {createSale} from "./cadence/transactions/create.js";
 import {purchase} from "./cadence/transactions/purchase.js";
+import {getNFTSale} from "./cadence/scripts/getNFTSale.js";
 
 fcl
   .config()
@@ -31,6 +32,7 @@ function App() {
   const [buyPrice, setBuyPrice] = useState(0);
   const [buyaddr, setBuyaddr] = useState("");
   const [salequeryaddr, setSalequeryaddr] = useState("");
+  const [saledata, setSaledata] = useState("");
 
 
   const mintNFT = async () => {
@@ -51,6 +53,15 @@ function App() {
       .then(fcl.decode);
 
     console.log(transactionID);
+  };
+
+  const getNFTsale = async () => {
+    const response = await fcl.send([
+      fcl.script(getNFTSale),
+      fcl.args([fcl.arg(salequeryaddr, fcl.t.Address)]),
+    ]);
+    const saledata = await fcl.decode(response);
+    console.log(saledata);
   };
 
 
@@ -227,6 +238,20 @@ function App() {
           ))
         : ""}
       {myNFT ? myNFT.length : 0}
+      <p> ----------------------</p>
+
+      <input type="text" placeholder="Enter Address" value={salequeryaddr} onChange={(e) => setSalequeryaddr(e.target.value)} />
+      <button onClick={() => getNFTsale()}> Get NFT Sale </button>
+      <p> ----------------------</p>
+      {saledata
+        ? saledata.map((nft, index) => (
+            <div key={index}>
+              <img src={nft.image} />
+              <p>Price : {nft.price}</p>
+            </div>
+          ))
+        : ""}
+      {saledata ? saledata.length : 0}
       <p> ----------------------</p>
     </div>
       
