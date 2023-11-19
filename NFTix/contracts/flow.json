@@ -1,0 +1,33 @@
+{
+	"contracts": {
+		"Marketplace": "marketplace.cdc",
+		"NFTix": "NFTix.cdc"
+	},
+	"networks": {
+		"emulator": "127.0.0.1:3569",
+		"mainnet": "access.mainnet.nodes.onflow.org:9000",
+		"testing": "127.0.0.1:3569",
+		"testnet": "access.devnet.nodes.onflow.org:9000"
+	},
+	"accounts": {
+		"emulator-account": {
+			"address": "f8d6e0586b0a20c7",
+			"key": "fc30ef5e761cb566f31f226ba849d8c5a47862faaafa0ca9a5be4d7518bba01f"
+		},
+		"test1118": {
+			"address": "b56c63fb07b02496",
+			"key": {
+				"type": "file",
+				"location": "test1118.pkey"
+			}
+		}
+	},
+	"deployments": {
+		"testnet": {
+			"test1118": [
+				"NFTix",
+				"Marketplace"
+			]
+		}
+	}
+}
